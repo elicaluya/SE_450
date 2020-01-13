@@ -1,0 +1,126 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Utility class for Inventory.  Fields are mutable and package-private.<a name="line.2"></a>
+<FONT color="green">003</FONT>     * Does not override &lt;code&gt;equals&lt;/code&gt; or &lt;code&gt;hashCode&lt;/code&gt;.<a name="line.3"></a>
+<FONT color="green">004</FONT>     *<a name="line.4"></a>
+<FONT color="green">005</FONT>     * @objecttype Mutable Data Class<a name="line.5"></a>
+<FONT color="green">006</FONT>     */<a name="line.6"></a>
+<FONT color="green">007</FONT>    final class Record {<a name="line.7"></a>
+<FONT color="green">008</FONT>      /**<a name="line.8"></a>
+<FONT color="green">009</FONT>       * The video.<a name="line.9"></a>
+<FONT color="green">010</FONT>       * @invariant &lt;code&gt;video != null&lt;/code&gt;<a name="line.10"></a>
+<FONT color="green">011</FONT>       */<a name="line.11"></a>
+<FONT color="green">012</FONT>      VideoObj video;<a name="line.12"></a>
+<FONT color="green">013</FONT>      /**<a name="line.13"></a>
+<FONT color="green">014</FONT>       * The number of copies of the video that are in the inventory.<a name="line.14"></a>
+<FONT color="green">015</FONT>       * @invariant &lt;code&gt;numOwned &gt; 0&lt;/code&gt;<a name="line.15"></a>
+<FONT color="green">016</FONT>       */<a name="line.16"></a>
+<FONT color="green">017</FONT>      int numOwned;<a name="line.17"></a>
+<FONT color="green">018</FONT>      /**<a name="line.18"></a>
+<FONT color="green">019</FONT>       * The number of copies of the video that are currently checked out.<a name="line.19"></a>
+<FONT color="green">020</FONT>       * @invariant &lt;code&gt;numOut &lt;= numOwned&lt;/code&gt;<a name="line.20"></a>
+<FONT color="green">021</FONT>       */<a name="line.21"></a>
+<FONT color="green">022</FONT>      int numOut;<a name="line.22"></a>
+<FONT color="green">023</FONT>      /**<a name="line.23"></a>
+<FONT color="green">024</FONT>       * The total number of times this video has ever been checked out.<a name="line.24"></a>
+<FONT color="green">025</FONT>       * @invariant &lt;code&gt;numRentals &gt;= numOut&lt;/code&gt;<a name="line.25"></a>
+<FONT color="green">026</FONT>       */<a name="line.26"></a>
+<FONT color="green">027</FONT>      int numRentals;<a name="line.27"></a>
+<FONT color="green">028</FONT>    <a name="line.28"></a>
+<FONT color="green">029</FONT>      /**<a name="line.29"></a>
+<FONT color="green">030</FONT>       * Initialize all object attributes.<a name="line.30"></a>
+<FONT color="green">031</FONT>       */<a name="line.31"></a>
+<FONT color="green">032</FONT>      Record(VideoObj video, int numOwned, int numOut, int numRentals) {<a name="line.32"></a>
+<FONT color="green">033</FONT>        this.video = video;<a name="line.33"></a>
+<FONT color="green">034</FONT>        this.numOwned = numOwned;<a name="line.34"></a>
+<FONT color="green">035</FONT>        this.numOut = numOut;<a name="line.35"></a>
+<FONT color="green">036</FONT>        this.numRentals = numRentals;<a name="line.36"></a>
+<FONT color="green">037</FONT>      }<a name="line.37"></a>
+<FONT color="green">038</FONT>      /**<a name="line.38"></a>
+<FONT color="green">039</FONT>       * Return a shallow copy of this record.<a name="line.39"></a>
+<FONT color="green">040</FONT>       */<a name="line.40"></a>
+<FONT color="green">041</FONT>      public Record copy() {<a name="line.41"></a>
+<FONT color="green">042</FONT>        return new Record(video,numOwned,numOut,numRentals);<a name="line.42"></a>
+<FONT color="green">043</FONT>      }<a name="line.43"></a>
+<FONT color="green">044</FONT>      /**<a name="line.44"></a>
+<FONT color="green">045</FONT>       * Return a string representation of the object in the following format:<a name="line.45"></a>
+<FONT color="green">046</FONT>       * &lt;code&gt;"video [numOwned,numOut,numRentals]"&lt;/code&gt;.<a name="line.46"></a>
+<FONT color="green">047</FONT>       */<a name="line.47"></a>
+<FONT color="green">048</FONT>      public String toString() {<a name="line.48"></a>
+<FONT color="green">049</FONT>        StringBuffer buffer = new StringBuffer();<a name="line.49"></a>
+<FONT color="green">050</FONT>        buffer.append(video);<a name="line.50"></a>
+<FONT color="green">051</FONT>        buffer.append(" [");<a name="line.51"></a>
+<FONT color="green">052</FONT>        buffer.append(numOwned);<a name="line.52"></a>
+<FONT color="green">053</FONT>        buffer.append(",");<a name="line.53"></a>
+<FONT color="green">054</FONT>        buffer.append(numOut);<a name="line.54"></a>
+<FONT color="green">055</FONT>        buffer.append(",");<a name="line.55"></a>
+<FONT color="green">056</FONT>        buffer.append(numRentals);<a name="line.56"></a>
+<FONT color="green">057</FONT>        buffer.append("]");<a name="line.57"></a>
+<FONT color="green">058</FONT>        return buffer.toString();<a name="line.58"></a>
+<FONT color="green">059</FONT>      }<a name="line.59"></a>
+<FONT color="green">060</FONT>    }<a name="line.60"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>
