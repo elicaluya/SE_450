@@ -13,7 +13,14 @@ public class InventoryTEST extends TestCase {
   // TODO  
   
   public void testSize() {
-    // TODO  
+    // TODO
+	  InventorySet set = new InventorySet();
+	  Assert.assertTrue(set.size() == 0);
+	  
+	  VideoObj vid = new VideoObj("A",2000,"B");
+	  set.addNumOwned(vid, 1);
+	
+	  Assert.assertTrue(set.size() == 1);
   }
 
   public void testAddNumOwned() {
@@ -26,10 +33,19 @@ public class InventoryTEST extends TestCase {
 
   public void testClear() {
     // TODO  
+	  InventorySet set = new InventorySet();
+	  Assert.assertTrue(set.size() == 0);
+	  VideoObj vid = new VideoObj("A",2000,"B");
+	  set.addNumOwned(vid, 1);
+	  Assert.assertTrue(set.size() == 1);
+	  set.clear();
+	  Assert.assertTrue(set.size() == 0);
   }
 
   public void testGet() {
     // TODO  
+	  VideoObj vid = new VideoObj("A",2000,"B");
+	  Record record = new Record(vid,20,10,300);
   }
 
   public void testToCollection() {

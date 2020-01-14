@@ -28,7 +28,7 @@ final class InventorySet {
    */
   public int size() {
     // TODO  
-    return 0;
+    return _data.size();
   }
 
   /**
@@ -36,7 +36,7 @@ final class InventorySet {
    */
   public Record get(VideoObj v) {
     // TODO  
-    return null;
+	  return _data.get(v.hashCode());
   }
 
   /**
@@ -63,7 +63,19 @@ final class InventorySet {
    * @postcondition changes the record for the video
    */
   public void addNumOwned(VideoObj video, int change) {
-    // TODO  
+    // TODO 
+	  if (_data.get(video.hashCode()) == null && change > 0) {
+		  Record record = new Record(video,change,0,0);
+		  _data.put(video,record);
+	  }
+	  else if (_data.get(video.hashCode()) != null) {
+		  int changeNum = _data.get(video.hashCode()).numOwned + change;
+		  
+		  if (changeNum > 0)
+			  _data.get(video.hashCode()).numOwned = changeNum;
+		  else 
+			  _data.remove(video);
+	  }		  
   }
 
   /**
@@ -74,7 +86,15 @@ final class InventorySet {
    * @postcondition changes the record for the video
    */
   public void checkOut(VideoObj video) {
-    // TODO  
+    // TODO
+	  if (_data.get(video.hashCode()) == null)
+		  throw new IllegalArgumentException("No Record of Video in Inventory to check out");
+	  if (_data.get(video.hashCode()).numOut == _data.get(video.hashCode()).numOwned)
+		  throw new IllegalArgumentException("All copies of video are currently checked out");
+	  else {
+		  _data.get(video.hashCode()).numOut++;
+		  _data.get(video.hashCode()).numRentals++;
+	  }  
   }
   
   /**
@@ -86,6 +106,13 @@ final class InventorySet {
    */
   public void checkIn(VideoObj video) {
     // TODO  
+	  if (_data.get(video.hashCode()) == null)
+		  throw new IllegalArgumentException("No Record of Video in Inventory to Check In");
+	  if (_data.get(video.hashCode()).numOut == 0)
+		  throw new IllegalArgumentException("Cannot Check In. No Copy of Video is Checked Out");
+	  else {
+		  _data.get(video.hashCode()).numOut--;
+	  }
   }
   
   /**
@@ -93,7 +120,8 @@ final class InventorySet {
    * @postcondition <code>size() == 0</code>
    */
   public void clear() {
-    // TODO  
+    // TODO
+	  _data.clear();
   }
 
   /**
