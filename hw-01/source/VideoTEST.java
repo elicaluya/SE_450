@@ -57,6 +57,18 @@ public class VideoTEST extends TestCase {
 
   public void testConstructorExceptionDirector() {
     // TODO  
+	try {
+		new VideoObj("X", 2000,null);
+		Assert.fail();
+	} catch (IllegalArgumentException e) {}
+	try {
+		new VideoObj("X", 2000,"");
+		Assert.fail();
+	} catch (IllegalArgumentException e) {}
+	try {
+		new VideoObj("X", 2000," ");
+		Assert.fail();
+	} catch (IllegalArgumentException e) {}
   }
 
   public void testHashCode() {
@@ -69,14 +81,37 @@ public class VideoTEST extends TestCase {
   }
 
   public void testEquals() { 
-    // TODO  
+    // TODO
+	VideoObj obj1 = new VideoObj("A",1900,"B");
+	VideoObj obj2 = new VideoObj("A",1900,"B");
+	VideoObj obj3 = new VideoObj("B",2000,"C");
+	Assert.assertTrue(obj1.equals(obj2));
+	Assert.assertFalse(obj1.equals(obj3));
   }
 
   public void testCompareTo() { 
-    // TODO  
+    // TODO
+	  
+	VideoObj obj1 = new VideoObj("A",1900,"B");
+	VideoObj obj2 = new VideoObj("A",1900,"B");
+	VideoObj obj3 = new VideoObj("B",1900,"B");
+	VideoObj obj4 = new VideoObj("A",2000,"B");
+	VideoObj obj5 = new VideoObj("A",2000,"C");
+	
+	
+	Assert.assertTrue(obj1.compareTo(obj2) == 0);
+	Assert.assertTrue(obj1.compareTo(obj3) == -1);
+	Assert.assertTrue(obj1.compareTo(obj4) == -1);
+	Assert.assertTrue(obj1.compareTo(obj5) == -1);
+	Assert.assertTrue(obj3.compareTo(obj1) == 1);
+	Assert.assertTrue(obj4.compareTo(obj1) == 1);
+	Assert.assertTrue(obj5.compareTo(obj1) == 1);
   }
 
   public void testToString() { 
-    // TODO  
+    // TODO 
+	VideoObj obj1 = new VideoObj("Title",2020,"Director");
+	Assert.assertTrue((obj1.toString()).equals("Title (2020) : Director"));
+	Assert.assertFalse((obj1.toString()).equals("titl (2021) : directo"));
   }
 }

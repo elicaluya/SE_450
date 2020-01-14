@@ -26,10 +26,24 @@ final class VideoObj implements Comparable {
    */
   VideoObj(String title, int year, String director) {
     // TODO  
-    _title = null;
-    _year = 0;
-    _director = null;
-     
+	
+	// throws IllegalArgumentException if the title or director string is null
+	if (title == null || director == null)
+	   	throw new IllegalArgumentException("title and director need to be non-null");
+	
+	// throws IllegalArgumentException if the tile or director is an empty string
+	if (title.trim().isEmpty() || director.trim().isEmpty())
+		throw new IllegalArgumentException("title and director must not be empty string");
+	
+	// throws IllegalArgumentException if the year is not in the correct range
+	if (year <= 1800 || year >= 5000)
+		throw new IllegalArgumentException("Year must be greater than 1800 and less than 5000");
+	  
+	
+	// initialize the object variables while trimming the leading and final spaces for the title and director
+	_title = title.trim();
+    _year = year;
+    _director = director.trim();
   }
 
   /**
@@ -37,7 +51,7 @@ final class VideoObj implements Comparable {
    */
   public String director() {
     // TODO  
-    return "director";
+    return _director;
   }
 
   /**
@@ -45,7 +59,7 @@ final class VideoObj implements Comparable {
    */
   public String title() {
     // TODO  
-    return "title";
+    return _title;
   }
 
   /**
@@ -53,7 +67,7 @@ final class VideoObj implements Comparable {
    */
   public int year() {
     // TODO  
-    return -1;
+    return _year;
   }
 
   /**
@@ -62,8 +76,10 @@ final class VideoObj implements Comparable {
    * @return deep equality test between this and thatObject.
    */
   public boolean equals(Object thatObject) {
-    // TODO  
-    return false;
+    // TODO
+	if (this.compareTo(thatObject) == 0)
+		return true;
+	return false;
   }
 
   /**
@@ -72,7 +88,11 @@ final class VideoObj implements Comparable {
    */
   public int hashCode() {
     // TODO  
-    return -1;
+    int hcode = 17;
+    hcode = 37*hcode + _title.hashCode();
+    hcode = 37*hcode + _year;
+    hcode = 37*hcode + _director.hashCode();
+    return hcode;
   }
 
   /**
@@ -84,7 +104,26 @@ final class VideoObj implements Comparable {
    * @throws ClassCastException if thatObject has an incompatible type.
    */
   public int compareTo(Object thatObject) {
-    // TODO  
+    // TODO
+	VideoObj obj = (VideoObj) thatObject;
+	if (_title.compareTo(obj._title) < 0)
+		return -1;
+	else if (_title.compareTo(obj._title) > 0)
+		return 1;
+	else if (_title.compareTo(obj._title) == 0) {
+		if (_year < obj._year)
+			return -1;
+		else if (_year > obj._year)
+			return 1;
+		else if (_year == obj._year) {
+			if (_director.compareTo(obj._director) < 0)
+				return -1;
+			else if (_director.compareTo(obj._director) > 0)
+				return 1;
+			else
+				return 0;
+		}
+	}
     return -1;
   }
 
@@ -94,6 +133,6 @@ final class VideoObj implements Comparable {
    */
   public String toString() {
     // TODO  
-    return "El Mariachi (1996) : Rodriguez";
+    return _title + " (" + Integer.toString(_year) + ") : " + _director;
   }
 }
