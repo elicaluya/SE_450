@@ -36,7 +36,7 @@ final class InventorySet {
    */
   public Record get(VideoObj v) {
     // TODO  
-	  return _data.get(v.hashCode());
+	  return _data.get(v);
   }
 
   /**
@@ -46,7 +46,13 @@ final class InventorySet {
   public Collection toCollection() {
     // Recall that an ArrayList is a Collection.
     // TODO  
-    return null;
+	  ArrayList<Record> array = new ArrayList<Record>();
+	  for (VideoObj v : _data.keySet()) {
+		  Record r = _data.get(v);
+		  array.add(r);
+	  }
+	  
+	  return array;
   }
 
   /**
@@ -64,15 +70,15 @@ final class InventorySet {
    */
   public void addNumOwned(VideoObj video, int change) {
     // TODO 
-	  if (_data.get(video.hashCode()) == null && change > 0) {
+	  if (_data.get(video) == null && change > 0) {
 		  Record record = new Record(video,change,0,0);
 		  _data.put(video,record);
 	  }
-	  else if (_data.get(video.hashCode()) != null) {
-		  int changeNum = _data.get(video.hashCode()).numOwned + change;
+	  else if (_data.get(video) != null) {
+		  int changeNum = _data.get(video).numOwned + change;
 		  
 		  if (changeNum > 0)
-			  _data.get(video.hashCode()).numOwned = changeNum;
+			  _data.get(video).numOwned = changeNum;
 		  else 
 			  _data.remove(video);
 	  }		  
@@ -87,13 +93,13 @@ final class InventorySet {
    */
   public void checkOut(VideoObj video) {
     // TODO
-	  if (_data.get(video.hashCode()) == null)
+	  if (_data.get(video) == null)
 		  throw new IllegalArgumentException("No Record of Video in Inventory to check out");
-	  if (_data.get(video.hashCode()).numOut == _data.get(video.hashCode()).numOwned)
+	  if (_data.get(video).numOut == _data.get(video).numOwned)
 		  throw new IllegalArgumentException("All copies of video are currently checked out");
 	  else {
-		  _data.get(video.hashCode()).numOut++;
-		  _data.get(video.hashCode()).numRentals++;
+		  _data.get(video).numOut++;
+		  _data.get(video).numRentals++;
 	  }  
   }
   
@@ -106,12 +112,12 @@ final class InventorySet {
    */
   public void checkIn(VideoObj video) {
     // TODO  
-	  if (_data.get(video.hashCode()) == null)
+	  if (_data.get(video) == null)
 		  throw new IllegalArgumentException("No Record of Video in Inventory to Check In");
-	  if (_data.get(video.hashCode()).numOut == 0)
+	  if (_data.get(video).numOut == 0)
 		  throw new IllegalArgumentException("Cannot Check In. No Copy of Video is Checked Out");
 	  else {
-		  _data.get(video.hashCode()).numOut--;
+		  _data.get(video).numOut--;
 	  }
   }
   
