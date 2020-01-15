@@ -27,8 +27,9 @@ final class InventorySet {
    * Return the number of Records.
    */
   public int size() {
-    // TODO  
-    return _data.size();
+    // TODO
+	  // Use HashMap method size() to return the size of the inventory
+	  return _data.size();
   }
 
   /**
@@ -36,6 +37,7 @@ final class InventorySet {
    */
   public Record get(VideoObj v) {
     // TODO  
+	  // Use HashMap method get() to return the Record using the VideoObj v as the key
 	  return _data.get(v);
   }
 
@@ -45,13 +47,17 @@ final class InventorySet {
    */
   public Collection toCollection() {
     // Recall that an ArrayList is a Collection.
-    // TODO  
+    // TODO
+	  // Create ArrayList of type Record to store the copies of Records from the InventorySet
 	  ArrayList<Record> array = new ArrayList<Record>();
+	  // Loop through the HashMap
 	  for (VideoObj v : _data.keySet()) {
+		  // Make a copy of the Record and add it to the array
 		  Record r = _data.get(v);
 		  array.add(r);
 	  }
 	  
+	  // Return the array with the copies of the Record objects
 	  return array;
   }
 
@@ -70,15 +76,21 @@ final class InventorySet {
    */
   public void addNumOwned(VideoObj video, int change) {
     // TODO 
+	  // Check to see if there is no Record for the video and if there is a positive change
 	  if (_data.get(video) == null && change > 0) {
+		  // Create a new Record object for the video and add it to the inventory
 		  Record record = new Record(video,change,0,0);
 		  _data.put(video,record);
 	  }
+	  // if there is an existing record for the video
 	  else if (_data.get(video) != null) {
+		  // Store the change number 
 		  int changeNum = _data.get(video).numOwned + change;
-		  
+		  // If the change doesn't deplete all of the copies owned in the inventory for that video,
+		  // adjust the amount owned for that video
 		  if (changeNum > 0)
 			  _data.get(video).numOwned = changeNum;
+		  // If the stock is depleted then remove the video from the InventorySet
 		  else 
 			  _data.remove(video);
 	  }		  
@@ -93,10 +105,13 @@ final class InventorySet {
    */
   public void checkOut(VideoObj video) {
     // TODO
+	  // If the video requested has no Record, throw IllegalArgumentException
 	  if (_data.get(video) == null)
 		  throw new IllegalArgumentException("No Record of Video in Inventory to check out");
+	  // if all of the copies of the video are currently checked out, throw IllegalArgumentException
 	  if (_data.get(video).numOut == _data.get(video).numOwned)
 		  throw new IllegalArgumentException("All copies of video are currently checked out");
+	  // Otherwise, increase the number of copies checked out and the total times it has been rented by 1 
 	  else {
 		  _data.get(video).numOut++;
 		  _data.get(video).numRentals++;
@@ -112,10 +127,13 @@ final class InventorySet {
    */
   public void checkIn(VideoObj video) {
     // TODO  
+	  // If the video requested has no Record, throw IllegalArgumentException
 	  if (_data.get(video) == null)
 		  throw new IllegalArgumentException("No Record of Video in Inventory to Check In");
+	  // If there are no copies of the videos that are checked out, throw IllegalArgumentException
 	  if (_data.get(video).numOut == 0)
 		  throw new IllegalArgumentException("Cannot Check In. No Copy of Video is Checked Out");
+	  // Otherwise, decrease the number of copies that are checked out by 1
 	  else {
 		  _data.get(video).numOut--;
 	  }
@@ -127,6 +145,7 @@ final class InventorySet {
    */
   public void clear() {
     // TODO
+	  // Use HashMap method clear() to remove all the Records in the InventorySet
 	  _data.clear();
   }
 

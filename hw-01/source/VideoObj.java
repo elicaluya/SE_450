@@ -51,6 +51,7 @@ final class VideoObj implements Comparable {
    */
   public String director() {
     // TODO  
+	// Return the _director string of the VideoObj  
     return _director;
   }
 
@@ -59,7 +60,8 @@ final class VideoObj implements Comparable {
    */
   public String title() {
     // TODO  
-    return _title;
+	  // Return the _title string of the VideoObj
+	  return _title;
   }
 
   /**
@@ -67,7 +69,8 @@ final class VideoObj implements Comparable {
    */
   public int year() {
     // TODO  
-    return _year;
+	  // Return the _year int of the VideoObj
+	  return _year;
   }
 
   /**
@@ -77,9 +80,10 @@ final class VideoObj implements Comparable {
    */
   public boolean equals(Object thatObject) {
     // TODO
-	if (this.compareTo(thatObject) == 0)
-		return true;
-	return false;
+	  // Check if the object passed in has the same information using the compareTo() method
+	  if (this.compareTo(thatObject) == 0)
+		  return true;
+	  return false;
   }
 
   /**
@@ -88,11 +92,12 @@ final class VideoObj implements Comparable {
    */
   public int hashCode() {
     // TODO  
-    int hcode = 17;
-    hcode = 37*hcode + _title.hashCode();
-    hcode = 37*hcode + _year;
-    hcode = 37*hcode + _director.hashCode();
-    return hcode;
+	  // Use the algorithm from class to create the hash code with 17 and 37
+	  int hcode = 17;
+	  hcode = 37*hcode + _title.hashCode();
+	  hcode = 37*hcode + _year;
+	  hcode = 37*hcode + _director.hashCode();
+	  return hcode;
   }
 
   /**
@@ -105,23 +110,31 @@ final class VideoObj implements Comparable {
    */
   public int compareTo(Object thatObject) {
     // TODO
-	VideoObj obj = (VideoObj) thatObject;
-	if (_title.compareTo(obj._title) < 0)
-		return -1;
-	else if (_title.compareTo(obj._title) > 0)
-		return 1;
-	else if (_title.compareTo(obj._title) == 0) {
-		if (_year < obj._year)
-			return -1;
-		else if (_year > obj._year)
-			return 1;
-		else if (_year == obj._year) {
-			if (_director.compareTo(obj._director) < 0)
-				return -1;
-			else if (_director.compareTo(obj._director) > 0)
-				return 1;
-			else
-				return 0;
+	  // Cast the object from argument into a VideoObj
+	  VideoObj obj = (VideoObj) thatObject;
+	  
+	  // First compare which title is greater
+	  if (_title.compareTo(obj._title) < 0)
+		  return -1;
+	  else if (_title.compareTo(obj._title) > 0)
+		  return 1;
+	  
+	  // If the titles are the same then compare the years
+	  else if (_title.compareTo(obj._title) == 0) {
+		  if (_year < obj._year)
+			  return -1;
+		  else if (_year > obj._year)
+			  return 1;
+		  
+		  // if the years are the same then compare the directors
+		  else if (_year == obj._year) {
+			  if (_director.compareTo(obj._director) < 0)
+				  return -1;
+			  else if (_director.compareTo(obj._director) > 0)
+				  return 1;
+			  // If all of the information is the same then the two VideoObj objects are equal and return 0
+			  else
+				  return 0;
 		}
 	}
     return -1;
@@ -133,6 +146,7 @@ final class VideoObj implements Comparable {
    */
   public String toString() {
     // TODO  
-    return _title + " (" + Integer.toString(_year) + ") : " + _director;
+	  // Construct and return string in desired form
+	  return _title + " (" + Integer.toString(_year) + ") : " + _director;
   }
 }

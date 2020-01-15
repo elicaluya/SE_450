@@ -57,18 +57,23 @@ public class VideoTEST extends TestCase {
 
   public void testConstructorExceptionDirector() {
     // TODO  
-	try {
-		new VideoObj("X", 2000,null);
-		Assert.fail();
-	} catch (IllegalArgumentException e) {}
-	try {
-		new VideoObj("X", 2000,"");
-		Assert.fail();
-	} catch (IllegalArgumentException e) {}
-	try {
-		new VideoObj("X", 2000," ");
-		Assert.fail();
-	} catch (IllegalArgumentException e) {}
+	  // Test to see if giving a null value will throw IllegalArgumentException
+	  try {
+		  new VideoObj("X", 2000,null);
+		  Assert.fail();
+	  } catch (IllegalArgumentException e) {}
+	  
+	  // Test if giving an empty string will throw IllegalArgumentException
+	  try {
+		  new VideoObj("X", 2000,"");
+		  Assert.fail();
+	  } catch (IllegalArgumentException e) {}
+	  
+	  // Test if empty string is detected after trimming the leading and trailing white spaces
+	  try {
+		  new VideoObj("X", 2000," ");
+		  Assert.fail();
+	  } catch (IllegalArgumentException e) {}
   }
 
   public void testHashCode() {
@@ -82,36 +87,48 @@ public class VideoTEST extends TestCase {
 
   public void testEquals() { 
     // TODO
-	VideoObj obj1 = new VideoObj("A",1900,"B");
-	VideoObj obj2 = new VideoObj("A",1900,"B");
-	VideoObj obj3 = new VideoObj("B",2000,"C");
-	Assert.assertTrue(obj1.equals(obj2));
-	Assert.assertFalse(obj1.equals(obj3));
+	  // Create VideoObj objects to test equality
+	  VideoObj obj1 = new VideoObj("A",1900,"B");
+	  VideoObj obj2 = new VideoObj("A",1900,"B");
+	  VideoObj obj3 = new VideoObj("B",2000,"C");
+	  
+	  // Test if two objects are equal
+	  Assert.assertTrue(obj1.equals(obj2));
+	  // Test if two objects are not equal
+	  Assert.assertFalse(obj1.equals(obj3));
   }
 
   public void testCompareTo() { 
     // TODO
-	  
-	VideoObj obj1 = new VideoObj("A",1900,"B");
-	VideoObj obj2 = new VideoObj("A",1900,"B");
-	VideoObj obj3 = new VideoObj("B",1900,"B");
-	VideoObj obj4 = new VideoObj("A",2000,"B");
-	VideoObj obj5 = new VideoObj("A",2000,"C");
+	  // Create VideoObj objects for testing comparisons to each other
+	  VideoObj obj1 = new VideoObj("A",1900,"B");
+	  VideoObj obj2 = new VideoObj("A",1900,"B");
+	  VideoObj obj3 = new VideoObj("B",1900,"B");
+	  VideoObj obj4 = new VideoObj("A",2000,"B");
+	  VideoObj obj5 = new VideoObj("A",2000,"C");
 	
-	
-	Assert.assertTrue(obj1.compareTo(obj2) == 0);
-	Assert.assertTrue(obj1.compareTo(obj3) == -1);
-	Assert.assertTrue(obj1.compareTo(obj4) == -1);
-	Assert.assertTrue(obj1.compareTo(obj5) == -1);
-	Assert.assertTrue(obj3.compareTo(obj1) == 1);
-	Assert.assertTrue(obj4.compareTo(obj1) == 1);
-	Assert.assertTrue(obj5.compareTo(obj1) == 1);
+	  // Test that two objects are equal using compareTo() method
+	  Assert.assertTrue(obj1.compareTo(obj2) == 0);
+	  // Test that obj1 is less than obj3 based on title
+	  Assert.assertTrue(obj1.compareTo(obj3) == -1);
+	  // Test that obj1 is less than obj4 based on year
+	  Assert.assertTrue(obj1.compareTo(obj4) == -1);
+	  // Test that obj1 is less than obj5 based on director
+	  Assert.assertTrue(obj1.compareTo(obj5) == -1);
+	  // Test that obj3 is greater than obj1 based on title
+	  Assert.assertTrue(obj3.compareTo(obj1) == 1);
+	  // Test that obj4 is greater than obj1 based on year
+	  Assert.assertTrue(obj4.compareTo(obj1) == 1);
+	  // Test that obj5 is greater than obj1 based on director
+	  Assert.assertTrue(obj5.compareTo(obj1) == 1);
   }
 
   public void testToString() { 
     // TODO 
-	VideoObj obj1 = new VideoObj("Title",2020,"Director");
-	Assert.assertTrue((obj1.toString()).equals("Title (2020) : Director"));
-	Assert.assertFalse((obj1.toString()).equals("titl (2021) : directo"));
+	  VideoObj obj1 = new VideoObj("Title",2020,"Director");
+	  // Test that obj1 produces the correct string
+	  Assert.assertTrue((obj1.toString()).equals("Title (2020) : Director"));
+	  // Test against an incorrect string
+	  Assert.assertFalse((obj1.toString()).equals("titl (2021) : directo"));
   }
 }
