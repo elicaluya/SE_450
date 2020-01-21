@@ -34,6 +34,9 @@ public class AssertExp1TEST extends TestCase{
 		
 		double[] array4 = new double[] {1,1,1,1};
 		assertTrue(ae.numUnique(array4) == 1);
+		
+		double[] array5 = new double[] {1};
+		assertTrue(ae.numUnique(array5) == 1);
 	}
 	
 	

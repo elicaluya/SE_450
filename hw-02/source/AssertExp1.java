@@ -40,14 +40,13 @@ class AssertExp1 {
 		int minPos = 0;
 		double minVal = list[0];
 		
-		if (list.length == 1) return minPos;
-		
-		for (int i = 1; i < list.length; i++) {
+		for (int i = 0; i < list.length; i++) {
 			if (list[i] < minVal) {
 				minVal = list[i];
 				minPos = i;
 			}
 		}
+		
 		return minPos;
 	}
 
@@ -70,17 +69,18 @@ class AssertExp1 {
 	 */
 	public static int numUnique(double[] list) {
 		// TODO
-		Set<Double> set = new HashSet<>();
-		
 		if (list.length == 0) return 0;
 		
-		for (int i = 0; i < list.length; i++) {
-			if (!set.contains(list[i]))
-				set.add(list[i]);
+		int count = 1;
+		
+		if (list.length != 1) {
+			for (int i = 1; i < list.length; i++) {
+				if (list[i] != list[i-1])
+					count++;
+			}
 		}
 		
-		return set.size();
-		
+		return count;	
 	}
 
 	/*
@@ -103,19 +103,19 @@ class AssertExp1 {
 		//TODO
 		if (list.length == 0) return new double[0];
 		
-		
 		double[] array = new double[numUnique(list)];
 		int j = 0;
 		array[j] = list[0];
 		
-		if (list.length == 1) return array;
-		
-		for (int i = 1; i < list.length; i++) {
-			if (list[i] != array[j]) {
-				j++;
-				array[j] = list[i];
+		if (list.length != 1) {
+			for (int i = 1; i < list.length; i++) {
+				if (list[i] != array[j]) {
+					j++;
+					array[j] = list[i];
+				}
 			}
 		}
+			
 		return array;
 	}
 
