@@ -75,7 +75,15 @@ public class MyLinked extends TestCase{
 
     // reverse the list "in place"... without creating any new nodes
     public void reverse () {
+    	Node prev = null , curr = first, next =null;
     
+    	while (curr != null) {
+    		next = curr.next;
+    		curr.next = prev;
+    		prev = curr;
+    		curr = next;
+    	}
+    	first = prev;
         assert checkInvariants ();
     }
 
@@ -171,24 +179,31 @@ public class MyLinked extends TestCase{
     public static void testReverse () {
         MyLinked b = new MyLinked ();
         b.reverse ();
-        print ("reverse empty", b);
+        Assert.assertTrue(b.isEmpty());
         b.add (1);
-        print ("singleton", b);
+        Assert.assertTrue(b.size() == 1);
+        Assert.assertTrue(b.first.item == 1);
         b.reverse ();
-        print ("reverse singleton", b);
+        Assert.assertTrue(b.first.item == 1);
+        Assert.assertTrue(b.size() == 1);
         b.add (2);
-        print ("two", b);
+        Assert.assertTrue(b.size() == 2);
+        Assert.assertTrue(b.first.item == 2);
+        Assert.assertTrue(b.first.next.item == 1);
         b.reverse ();
-        print ("reverse two", b);
+        Assert.assertTrue(b.first.item == 1);
+        Assert.assertTrue(b.first.next.item == 2);
         b.reverse ();
-        print ("reverse again", b);
+        Assert.assertTrue(b.first.item == 2);
+        Assert.assertTrue(b.first.next.item == 1);
         for (double i = 3; i < 7; i++) {
             b.add (i);
             b.add (i);
         }
-        print ("bigger list", b);
+        Assert.assertTrue(b.size() == 10);
         b.reverse ();
-        print ("reversed", b);
+        Assert.assertTrue(b.first.item == 1);
+        Assert.assertTrue(b.first.next.item == 2);
     }
     
     public static void testRemove () {
