@@ -1,6 +1,8 @@
 package shop.data;
 
 import java.util.Map;
+
+
 import java.util.HashMap;
 import java.util.Comparator;
 import java.util.Collections;
@@ -30,12 +32,12 @@ final class InventorySet implements Inventory {
 
   public int size() {
     // TODO  
-    return 0;
+    return _data.size();
   }
 
   public Record get(Video v) {
     // TODO  
-    return null;
+    return _data.get(v);
   }
 
   public Iterator<Record> iterator() {
@@ -44,7 +46,7 @@ final class InventorySet implements Inventory {
 
   public Iterator<Record> iterator(Comparator<Record> comparator) {
     // TODO  
-    return null;
+    return _data.values().iterator();
   }
 
   /**
@@ -60,7 +62,29 @@ final class InventorySet implements Inventory {
    * @throws IllegalArgumentException if video null or change is zero
    */
   void addNumOwned(Video video, int change) {
-    // TODO  
+    // TODO 
+	  if (video == null || change == 0) throw new IllegalArgumentException("Null video or change is zero");
+	  
+	  RecordObj r = (RecordObj) _data.get(video);
+	  // Check to see if there is no Record for the video and if there is a positive change
+	  if (r == null && change > 0) {
+		  // Create a new Record object for the video and add it to the inventory
+		  RecordObj record = new RecordObj(video,change,0,0);
+		  _data.put(video,record);
+	  }
+	  
+	  // if there is an existing record for the video
+	  else if (r != null) {
+		  // Store the change number 
+		  int changeNum = r.numOwned + change;
+		  // If the change doesn't deplete all of the copies owned in the inventory for that video,
+		  // adjust the amount owned for that video
+		  if (changeNum > 0)
+			  r.numOwned = changeNum;
+			  // If the stock is depleted then remove the video from the InventorySet
+		  else 
+			  _data.remove(video);
+	  }
   }
 
   /**
@@ -70,7 +94,19 @@ final class InventorySet implements Inventory {
    * equals numOwned.
    */
   void checkOut(Video video) {
-    // TODO  
+    // TODO
+	  RecordObj r = (RecordObj)_data.get(video);
+	  // If the video requested has no Record, throw IllegalArgumentException
+	  if (r == null)
+		  throw new IllegalArgumentException("No Record of Video in Inventory to check out");
+	  // if all of the copies of the video are currently checked out, throw IllegalArgumentException
+	  if (r.numOut == r.numOwned)
+		  throw new IllegalArgumentException("All copies of video are currently checked out");
+	  // Otherwise, increase the number of copies checked out and the total times it has been rented by 1 
+	  else {
+		  r.numOut++;
+		  r.numRentals++;
+	  }
   }
   
   /**
@@ -80,14 +116,26 @@ final class InventorySet implements Inventory {
    * non-positive.
    */
   void checkIn(Video video) {
-    // TODO  
+    // TODO
+	  RecordObj r = (RecordObj)_data.get(video);
+	  // If the video requested has no Record, throw IllegalArgumentException
+	  if (r == null)
+		  throw new IllegalArgumentException("No Record of Video in Inventory to Check In");
+	  // If there are no copies of the videos that are checked out, throw IllegalArgumentException
+	  if (r.numOut == 0)
+		  throw new IllegalArgumentException("Cannot Check In. No Copy of Video is Checked Out");
+	  // Otherwise, decrease the number of copies that are checked out by 1
+	  else {
+		  r.numOut--;
+	  }
   }
   
   /**
    * Remove all records from the inventory.
    */
   void clear() {
-    // TODO  
+    // TODO 
+	_data.clear();
   }
 
   public String toString() {
