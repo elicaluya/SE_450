@@ -36,8 +36,12 @@ final class InventorySet implements Inventory {
   }
 
   public Record get(Video v) {
-    // TODO  
-    return _data.get(v);
+    // TODO
+	  Record r = _data.get(v);
+	  // If video not found, return null
+	  if (r == null) return null;
+	  // Otherwise return a copy of the record
+	  return new RecordObj(v,r.numOwned(),r.numOut(),r.numRentals());
   }
 
   public Iterator<Record> iterator() {
@@ -46,7 +50,9 @@ final class InventorySet implements Inventory {
 
   public Iterator<Record> iterator(Comparator<Record> comparator) {
     // TODO  
-    return _data.values().iterator();
+	  ArrayList<Record> record_array = new ArrayList<Record>(_data.values());
+	  Collections.sort(record_array, comparator);
+	  return Collections.unmodifiableCollection(record_array).iterator();
   }
 
   /**

@@ -58,7 +58,18 @@ public class DataTEST extends TestCase {
   }
 
   public void testConstructorExceptionDirector() {
-    // TODO  
+    // TODO 
+	  try {
+		  Data.newVideo("A", 2000, null);
+	  } catch (IllegalArgumentException e) {}
+	  try {
+	      Data.newVideo("A", 2002, "");
+	      Assert.fail();
+	  } catch (IllegalArgumentException e) { }
+	  try {
+	      Data.newVideo("A", 2002, " ");
+	      Assert.fail();
+	  } catch (IllegalArgumentException e) { }
   }
 
 }

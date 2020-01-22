@@ -15,6 +15,10 @@ final class CmdOut implements Command {
   }
   public boolean run() {
     // TODO  
-    return false;
+	  try {
+		  _inventory.checkOut(_video);
+		  return true;
+	  } catch (ClassCastException e) {};
+	  return false;
   }
 }
