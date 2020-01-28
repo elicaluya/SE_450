@@ -1,13 +1,19 @@
 import java.util.List;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class fp {
 	
 static <U,V> List<V> map(Iterable<U> l, Function<U,V> f) {
-	return null;
+	List<V> list = new ArrayList<V>();
+	for (U u : l) {
+		list.add(f.apply(u));
+	}
+	return list;
 }
 
 
