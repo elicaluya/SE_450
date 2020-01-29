@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
@@ -18,20 +17,31 @@ static <U,V> List<V> map(Iterable<U> l, Function<U,V> f) {
 
 
 static <U,V> V foldLeft(V e, Iterable<U>l, BiFunction<V,U,V> f){
-	return null;
+	for (U u : l) {
+		e = f.apply(e, u);
+	}
+	return e;
 }
 
 
-
-
 static <U,V> V foldRight(V e, Iterable<U>l, BiFunction<U,V,V> f){
-	return null;
+	for (U u : l) {
+		e = f.apply(u, e);
+	}
+	return e;
 }
 
 
 
 static <U> Iterable<U> filter(Iterable<U> l, Predicate<U> p){
-return null;
+	List<U> list = new ArrayList<U>();
+	
+	for (U u : l) {
+		if (p.test(u))
+			list.add(u);
+	}
+	
+	return list;
 }
 
 static <U> U minVal(Iterable<U> l, Comparator<U> c){
@@ -70,7 +80,7 @@ static <U extends Comparable<U>> int minPos(Iterable<U> l){
 		// minimum in  a List of  Integers
 
 		// (8)  Use minPos to calculate the position of the
-		// maximum in  a List of  String
+		// minimum in  a List of  String
 	}
 
 }
