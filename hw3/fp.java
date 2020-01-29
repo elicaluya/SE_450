@@ -4,6 +4,7 @@ import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class fp {
 	
@@ -46,11 +47,16 @@ static <U> Iterable<U> filter(Iterable<U> l, Predicate<U> p){
 
 static <U> U minVal(Iterable<U> l, Comparator<U> c){
 	// write using fold.  No other loops permitted. 
-	return null;
+	Iterator<U> itr = l.iterator();
+	U first = itr.next();
+	U result = foldLeft(first,l,(x,y) -> c.compare(x, y) < 0 ? x : y);
+	
+	return result;
 }
 
 static <U extends Comparable<U>> int minPos(Iterable<U> l){
-	// write using fold.  No other loops permitted. 
+	// write using fold.  No other loops permitted.
+	
 	return 0;
 }
 
