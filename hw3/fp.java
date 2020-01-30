@@ -18,6 +18,9 @@ static <U,V> List<V> map(Iterable<U> l, Function<U,V> f) {
 
 
 static <U,V> V foldLeft(V e, Iterable<U>l, BiFunction<V,U,V> f){
+	Iterator<U> itr = l.iterator();
+	if (!itr.hasNext()) return e;
+	
 	for (U u : l) {
 		e = f.apply(e, u);
 	}
@@ -26,6 +29,9 @@ static <U,V> V foldLeft(V e, Iterable<U>l, BiFunction<V,U,V> f){
 
 
 static <U,V> V foldRight(V e, Iterable<U>l, BiFunction<U,V,V> f){
+	Iterator<U> itr = l.iterator();
+	if (!itr.hasNext()) return e;
+	
 	for (U u : l) {
 		e = f.apply(u, e);
 	}
@@ -54,10 +60,32 @@ static <U> U minVal(Iterable<U> l, Comparator<U> c){
 	return result;
 }
 
+
+
+
+
 static <U extends Comparable<U>> int minPos(Iterable<U> l){
 	// write using fold.  No other loops permitted.
+	int min = 0;
+	int current = 1;
+	Iterator<U> itr = l.iterator();
+	U first = itr.next();
 	
-	return 0;
+	
+	
+	foldLeft(first,l,(x,y) ->{ 
+		
+		if (y.compareTo(x) < 0) {
+			min = current;
+			return x;
+		}
+		else {
+			current++;
+			return y;
+		}
+	});
+	
+	return min;
 }
 
 	public static void main(String[] args) {

@@ -35,6 +35,8 @@ public class fpTest extends TestCase{
 		List<String> list2 = Arrays.asList("one","two","three");
 		List<Integer> list3 = Arrays.asList(1,2,3,4,5,6);
 		List<String> list4 = Arrays.asList("one","two","three","four","five","six");
+		List<Integer> list5 = Arrays.asList();
+		List<String> list6 = Arrays.asList();
 		
 		int result1 = fp.foldLeft(0, list1, (x,y) -> x + y);
 		Assert.assertTrue(result1 == 6);
@@ -47,6 +49,12 @@ public class fpTest extends TestCase{
 		
 		String s2 = fp.foldLeft("", list4, (x,y)-> x + y);
 		Assert.assertTrue(s2.equals("onetwothreefourfivesix"));
+		
+		int result3 = fp.foldLeft(0, list5, (x,y) -> x + y);
+		Assert.assertTrue(result3 == 0);
+		
+		String s3 = fp.foldLeft("", list6, (x,y)-> x + y);
+		Assert.assertTrue(s3.equals(""));
 	}
 	
 	
@@ -116,5 +124,13 @@ public class fpTest extends TestCase{
 		Assert.assertTrue(resultMax2 == 8);
 		int resultMax3 = fp.minVal(list3, max);
 		Assert.assertTrue(resultMax3 == 8);
+	}
+	
+	
+	
+	public void testMinPos() {
+		List<Integer> list1 = Arrays.asList(3,7,2,8,5,6);
+		int result1 = fp.minPos(list1);
+		Assert.assertTrue(result1 == 2);
 	}
 }
