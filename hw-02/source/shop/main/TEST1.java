@@ -90,15 +90,28 @@ public class TEST1 extends TestCase {
     
     
     // Create iterator based on amount owned
-    Iterator<Record> it = _inventory.iterator(new java.util.Comparator<Record>() {
+    Iterator<Record> it1 = _inventory.iterator(new java.util.Comparator<Record>() {
         public int compare (Record r1, Record r2) {
         	return r2.numOwned() - r1.numOwned();
         }
     });
     
-    expect(it.next() ,"Title1 (2000) : Director1 [10,1,1]");
-    expect(it.next(), "C (2002) : D [7,0,0]");
-    expect(it.next() ,"A (2001) : B [6,1,3]");
-    Assert.assertFalse(it.hasNext());
+    expect(it1.next() ,"Title1 (2000) : Director1 [10,1,1]");
+    expect(it1.next(), "C (2002) : D [7,0,0]");
+    expect(it1.next() ,"A (2001) : B [6,1,3]");
+    Assert.assertFalse(it1.hasNext());
+    
+    
+ // Create iterator based on number of rentals
+    Iterator<Record> it2 = _inventory.iterator(new java.util.Comparator<Record>() {
+        public int compare (Record r1, Record r2) {
+        	return r2.numRentals() - r1.numRentals();
+        }
+    });
+    
+    expect(it2.next() ,"A (2001) : B [6,1,3]");
+    expect(it2.next() ,"Title1 (2000) : Director1 [10,1,1]");
+    expect(it2.next(), "C (2002) : D [7,0,0]");
+    Assert.assertFalse(it2.hasNext());
   }
 }
