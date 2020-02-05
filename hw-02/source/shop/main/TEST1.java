@@ -83,21 +83,22 @@ public class TEST1 extends TestCase {
     
     // Create new Video object v3 and add it to inventory
     Video v3 = Data.newVideo("C", 2002, "D");
-    Assert.assertTrue(Data.newAddCmd(_inventory, v3, 5).run());
+    Assert.assertTrue(Data.newAddCmd(_inventory, v3, 7).run());
     Assert.assertEquals(_inventory.size(), 3);
-    Assert.assertEquals(_inventory.get(v3).numOwned(), 5);
-    expect(v3,"C (2002) : D [5,0,0]");
+    Assert.assertEquals(_inventory.get(v3).numOwned(), 7);
+    expect(v3,"C (2002) : D [7,0,0]");
     
-    // Add another video object
-    Video v4 = Data.newVideo("E", 2004, "F");
-    Assert.assertTrue(Data.newAddCmd(_inventory, v4, 5).run());
-
-    // Show iterator by iterating through sorted inventory
-    Iterator<Record> it = _inventory.iterator();
-    expect(it.next(), "A (2001) : B [6,1,3]");
-    expect(it.next(), "C (2002) : D [5,0,0]");
-    expect(it.next(), "E (2004) : F [5,0,0]");
+    
+    // Create iterator based on amount owned
+    Iterator<Record> it = _inventory.iterator(new java.util.Comparator<Record>() {
+        public int compare (Record r1, Record r2) {
+        	return r2.numOwned() - r1.numOwned();
+        }
+    });
+    
     expect(it.next() ,"Title1 (2000) : Director1 [10,1,1]");
+    expect(it.next(), "C (2002) : D [7,0,0]");
+    expect(it.next() ,"A (2001) : B [6,1,3]");
     Assert.assertFalse(it.hasNext());
   }
 }

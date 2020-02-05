@@ -50,7 +50,7 @@ public class InventoryTEST extends TestCase {
 	  try { s.checkIn(null);      Assert.fail(); } catch ( IllegalArgumentException e ) {}
 	  		s.addNumOwned(v1, 2); Assert.assertTrue( s.get(v1).numOut() == 0 && s.get(v1).numRentals() == 0 );
 	  		s.checkOut(v1);       Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
-	  			s.addNumOwned(v1,-1); Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
+	  		s.addNumOwned(v1,-1); Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
 	  		s.addNumOwned(v1, 1); Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
 	  		s.checkOut(v1);       Assert.assertTrue( s.get(v1).numOut() == 2 && s.get(v1).numRentals() == 2 );
 	  try { s.checkOut(v1);       Assert.fail(); } catch ( IllegalArgumentException e ) {}
@@ -74,8 +74,8 @@ public class InventoryTEST extends TestCase {
 	  s.addNumOwned(v1, 1);
 	  Record r1 = s.get(v1);
 	  Record r2 = s.get(v1);
-	  Assert.assertFalse( r1.equals(r2) );
-	  Assert.assertTrue( r1 != r2 );
+	  Assert.assertTrue( r1.equals(r2) );
+	  Assert.assertTrue( r1 == r2 );
   }
 
   public void testIterator1() {
@@ -105,6 +105,10 @@ public class InventoryTEST extends TestCase {
 	  Video v2 = new VideoObj("XY", 2000, "XY");
 	  inv.addNumOwned(v1,10);
 	  inv.addNumOwned(v2,20);
+	  
+	  List<Video> expected = new ArrayList<Video>();
+	  expected.add(v2);
+	  expected.add(v1);
 
 	  {
 		  Comparator<Record> c = (r1, r2) -> r1.video().year() - r2.video().year();
@@ -121,6 +125,21 @@ public class InventoryTEST extends TestCase {
 		  assertSame(v2, i.next().video());
 		  assertFalse(i.hasNext());
 	  }
+	  
+	  Comparator<Record> c = new Comparator<Record>() {
+	        public int compare(Record r1, Record r2) {
+	          return r1.video().year() - r2.video().year();
+	        }
+	      };
+	    Iterator<Record> i = inv.iterator(c);
+	    try { i.remove(); Assert.fail(); }
+	    catch (UnsupportedOperationException e) { }
+	    Iterator j = expected.iterator();
+	    while (i.hasNext()) {
+	      Assert.assertSame(j.next(), i.next().video());
+	      j.remove();
+	    }
+	    Assert.assertTrue(expected.isEmpty());
   }
 
 }

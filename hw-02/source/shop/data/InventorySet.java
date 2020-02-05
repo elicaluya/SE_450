@@ -41,7 +41,7 @@ final class InventorySet implements Inventory {
 	  // If video not found, return null
 	  if (r == null) return null;
 	  // Otherwise return a copy of the record
-	  return new RecordObj(v,r.numOwned(),r.numOut(),r.numRentals());
+	  return r;
   }
 
   public Iterator<Record> iterator() {
