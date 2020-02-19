@@ -20,7 +20,7 @@ final class CmdAdd implements Command {
 	  try {
 		  _inventory.addNumOwned(_video, _change);
 		  return true;
-	  } catch (ClassCastException e) {};
+	  } catch (IllegalArgumentException e) {};
 	  return false;
   }
 }

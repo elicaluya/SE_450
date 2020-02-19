@@ -22,7 +22,11 @@ public class Data {
    */
   static public Video newVideo(String title, int year, String director) {
     // TODO  
-    return null;
+	  if (title == null || director == null) throw new  IllegalArgumentException("Null value in title or director");
+	  if (title.trim().isEmpty() || director.trim().isEmpty()) throw new IllegalArgumentException("Empty string in title or director");
+	  if (year < 1801 || year > 4999) throw new IllegalArgumentException("Invalid year, must be between 1800 and 5000");
+	  
+	  return new VideoObj(title.trim(),year,director.trim());
   }
 
   /**

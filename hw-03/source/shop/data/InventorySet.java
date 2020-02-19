@@ -46,12 +46,16 @@ final class InventorySet implements Inventory {
 
   public int size() {
     // TODO  
-    return 0;
+    return _data.size();
   }
 
   public Record get(Video v) {
     // TODO  
-    return null;
+	  Record r = _data.get(v);
+	  // If video not found, return null
+	  if (r == null) return null;
+	  // Otherwise return a copy of the record
+	  return r;
   }
 
   public Iterator<Record> iterator() {
@@ -60,7 +64,9 @@ final class InventorySet implements Inventory {
 
   public Iterator<Record> iterator(Comparator<Record> comparator) {
     // TODO  
-    return null;
+	ArrayList<Record> record_array = new ArrayList<Record>(_data.values());
+	Collections.sort(record_array, comparator);
+	return Collections.unmodifiableCollection(record_array).iterator();
   }
 
   /**
@@ -104,7 +110,19 @@ final class InventorySet implements Inventory {
    */
   Record checkOut(Video video) {
     // TODO  
-    return null;
+	  RecordObj r = (RecordObj)_data.get(video);
+	  // If the video requested has no Record, throw IllegalArgumentException
+	  if (r == null)
+		  throw new IllegalArgumentException("No Record of Video in Inventory to check out");
+	  // if all of the copies of the video are currently checked out, throw IllegalArgumentException
+	  if (r.numOut == r.numOwned)
+		  throw new IllegalArgumentException("All copies of video are currently checked out");
+	  // Otherwise, increase the number of copies checked out and the total times it has been rented by 1 
+	  else {
+		  r.numOut++;
+		  r.numRentals++;
+	  }
+	  return r;
   }
   
   /**
@@ -116,7 +134,18 @@ final class InventorySet implements Inventory {
    */
   Record checkIn(Video video) {
     // TODO  
-    return null;
+	  RecordObj r = (RecordObj)_data.get(video);
+	  // If the video requested has no Record, throw IllegalArgumentException
+	  if (r == null)
+		  throw new IllegalArgumentException("No Record of Video in Inventory to Check In");
+	  // If there are no copies of the videos that are checked out, throw IllegalArgumentException
+	  if (r.numOut == 0)
+		  throw new IllegalArgumentException("Cannot Check In. No Copy of Video is Checked Out");
+	  // Otherwise, decrease the number of copies that are checked out by 1
+	  else {
+		  r.numOut--;
+	  }
+	  return r;
   }
   
   /**
@@ -125,7 +154,8 @@ final class InventorySet implements Inventory {
    */
   Map clear() {
     // TODO  
-    return null;
+	  _data.clear();
+	  return _data;
   }
 
   /**

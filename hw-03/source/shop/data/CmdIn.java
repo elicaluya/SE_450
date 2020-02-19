@@ -16,7 +16,11 @@ final class CmdIn implements UndoableCommand {
   }
   public boolean run() {
     // TODO  
-    return false;
+	  try {
+		  _inventory.checkIn(_video);
+		  return true;
+	  } catch (ClassCastException e) {};
+	  return false;
   }
   public void undo() {
     // TODO  

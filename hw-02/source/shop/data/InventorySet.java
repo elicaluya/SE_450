@@ -79,6 +79,8 @@ final class InventorySet implements Inventory {
 		  _data.put(video,record);
 	  }
 	  
+	  else if (r == null && change < 0) throw new IllegalArgumentException("Cannot remove video that does not exist.");
+	  
 	  // if there is an existing record for the video
 	  else if (r != null) {
 		  // Store the change number 
@@ -88,8 +90,10 @@ final class InventorySet implements Inventory {
 		  if (changeNum > 0)
 			  r.numOwned = changeNum;
 			  // If the stock is depleted then remove the video from the InventorySet
-		  else 
+		  else if (changeNum == 0 && r.numOut == 0)
 			  _data.remove(video);
+		  else
+			  throw new IllegalArgumentException("Invalid removal of video");
 	  }
   }
 

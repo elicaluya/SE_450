@@ -19,12 +19,12 @@ public class InventoryTEST extends TestCase {
   
   public void testSize() {
       Assert.assertEquals( 0, s.size() );
-s.addNumOwned(v1,  1); Assert.assertEquals( 1, s.size() );
-s.addNumOwned(v1,  2); Assert.assertEquals( 1, s.size() );
-s.addNumOwned(v2,  1); Assert.assertEquals( 2, s.size() );
-s.addNumOwned(v2, -1); Assert.assertEquals( 1, s.size() );
-s.addNumOwned(v1, -3); Assert.assertEquals( 0, s.size() );
-try { s.addNumOwned(v1, -3); Assert.fail(); } catch ( IllegalArgumentException e ) {}
+      s.addNumOwned(v1,  1); Assert.assertEquals( 1, s.size() );
+      s.addNumOwned(v1,  2); Assert.assertEquals( 1, s.size() );
+      s.addNumOwned(v2,  1); Assert.assertEquals( 2, s.size() );
+      s.addNumOwned(v2, -1); Assert.assertEquals( 1, s.size() );
+      s.addNumOwned(v1, -3); Assert.assertEquals( 0, s.size() );
+      try { s.addNumOwned(v1, -3); Assert.fail(); } catch ( IllegalArgumentException e ) {}
 }
 
 public void testAddNumOwned() {
@@ -40,21 +40,21 @@ try { s.addNumOwned(null, 1);   Assert.fail(); } catch ( IllegalArgumentExceptio
 }
 
 public void testCheckOutCheckIn() {
-try { s.checkOut(null);     Assert.fail(); } catch ( IllegalArgumentException e ) {}
-try { s.checkIn(null);      Assert.fail(); } catch ( IllegalArgumentException e ) {}
-s.addNumOwned(v1, 2); Assert.assertTrue( s.get(v1).numOut() == 0 && s.get(v1).numRentals() == 0 );
-s.checkOut(v1);       Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
-try { s.addNumOwned(v1,-3); Assert.fail(); } catch ( IllegalArgumentException e ) {}
-try { s.addNumOwned(v1,-2); Assert.fail(); } catch ( IllegalArgumentException e ) {}
-s.addNumOwned(v1,-1); Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
-s.addNumOwned(v1, 1); Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
-s.checkOut(v1);       Assert.assertTrue( s.get(v1).numOut() == 2 && s.get(v1).numRentals() == 2 );
-try { s.checkOut(v1);       Assert.fail(); } catch ( IllegalArgumentException e ) {}
-s.checkIn(v1);        Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 2 );
-s.checkIn(v1copy);    Assert.assertTrue( s.get(v1).numOut() == 0 && s.get(v1).numRentals() == 2 );
-try { s.checkIn(v1);        Assert.fail(); } catch ( IllegalArgumentException e ) {}
-try { s.checkOut(v2);       Assert.fail(); } catch ( IllegalArgumentException e ) {}
-s.checkOut(v1);       Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 3 );
+	try { s.checkOut(null);     Assert.fail(); } catch ( IllegalArgumentException e ) {}
+	try { s.checkIn(null);      Assert.fail(); } catch ( IllegalArgumentException e ) {}
+	s.addNumOwned(v1, 2); Assert.assertTrue( s.get(v1).numOut() == 0 && s.get(v1).numRentals() == 0 );
+	s.checkOut(v1);       Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
+	try { s.addNumOwned(v1,-3); Assert.fail(); } catch ( IllegalArgumentException e ) {}
+	try { s.addNumOwned(v1,-2); Assert.fail(); } catch ( IllegalArgumentException e ) {}
+	s.addNumOwned(v1,-1); Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
+	s.addNumOwned(v1, 1); Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 1 );
+	s.checkOut(v1);       Assert.assertTrue( s.get(v1).numOut() == 2 && s.get(v1).numRentals() == 2 );
+	try { s.checkOut(v1);       Assert.fail(); } catch ( IllegalArgumentException e ) {}
+	s.checkIn(v1);        Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 2 );
+	s.checkIn(v1copy);    Assert.assertTrue( s.get(v1).numOut() == 0 && s.get(v1).numRentals() == 2 );
+	try { s.checkIn(v1);        Assert.fail(); } catch ( IllegalArgumentException e ) {}
+	try { s.checkOut(v2);       Assert.fail(); } catch ( IllegalArgumentException e ) {}
+	s.checkOut(v1);       Assert.assertTrue( s.get(v1).numOut() == 1 && s.get(v1).numRentals() == 3 );
 }
 
 public void testClear() {

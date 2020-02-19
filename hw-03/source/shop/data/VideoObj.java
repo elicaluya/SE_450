@@ -22,36 +22,71 @@ final class VideoObj implements Video {
 
   public String director() {
     // TODO  
-    return "director";
+    return _director;
   }
 
   public String title() {
     // TODO  
-    return "title";
+    return _title;
   }
 
   public int year() {
     // TODO  
-    return -1;
+    return _year;
   }
 
   public boolean equals(Object thatObject) {
     // TODO  
+    if (thatObject != null ) {
+		  if (this.hashCode() == thatObject.hashCode()) return true;
+	  }
+	
     return false;
   }
 
   public int hashCode() {
     // TODO  
-    return -1;
+	  int hcode = 17;
+	  hcode = 37*hcode + _title.hashCode();
+	  hcode = 37*hcode + _year;
+	  hcode = 37*hcode + _director.hashCode();
+	  return hcode;
   }
 
   public int compareTo(Object thatObject) {
     // TODO  
-    return -1;
+	// Cast the object from argument into a VideoObj
+		VideoObj obj = (VideoObj) thatObject;
+			  
+		// First compare which title is greater
+		if (_title.compareTo(obj._title) < 0)
+			return -1;
+		else if (_title.compareTo(obj._title) > 0)
+			return 1;
+			  
+		// If the titles are the same then compare the years
+		else if (_title.compareTo(obj._title) == 0) {
+			if (_year < obj._year)
+				return -1;
+			else if (_year > obj._year)
+				return 1;
+				  
+			// if the years are the same then compare the directors
+			else if (_year == obj._year) {
+				if (_director.compareTo(obj._director) < 0)
+					return -1;
+				else if (_director.compareTo(obj._director) > 0)
+					return 1;
+				// If all of the information is the same then the two VideoObj objects are equal and return 0
+				else
+					return 0;
+			}	
+		}
+	    return -1;
   }
 
   public String toString() {
     // TODO  
-    return "El Mariachi (1996) : Rodriguez";
+	  return _title.trim() + " (" + Integer.toString(_year) + ") : " + _director.trim();
   }
 }
