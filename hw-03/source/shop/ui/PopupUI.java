@@ -41,6 +41,22 @@ final class PopupUI implements UI {
 
   public String[] processForm(UIForm form) {
     // TODO  
-    return null;
+	  String[] s = new String[form.size()];
+	  
+	  int i = 0;
+	  while (i < form.size()) {
+		  String r = JOptionPane.showInputDialog(form.getPrompt(i));
+		  if (r == null)
+			  r = "";
+		  if (form.checkInput(i, r)) {
+			  s[i] = r;
+			  i++;
+		  }
+		  else {
+			  displayError("Error processing form");
+		  }
+	  }
+	  
+	  return s;
   }
 }
