@@ -3,7 +3,7 @@ package shop.ui;
 /**
  * @see UIFormBuilder
  */
-public final class UIForm {
+public final class UIForm{
   private final String _heading;
   private final Pair[] _form;
 

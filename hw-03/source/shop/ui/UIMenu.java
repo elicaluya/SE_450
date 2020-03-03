@@ -8,8 +8,8 @@ public final class UIMenu {
   private final Pair[] _menu;
 
   static final class Pair {
-    final String prompt;
-    final UIMenuAction action;
+	  final String prompt;
+	  final UIMenuAction action;
 
     Pair(String thePrompt, UIMenuAction theAction) {
       prompt = thePrompt;
