@@ -1,5 +1,7 @@
 package shop.data;
 
+import java.util.HashMap;
+
 /**
  * Implementation of Video interface.
  * @see Data
@@ -8,6 +10,7 @@ final class VideoObj implements Video {
   private final String _title;
   private final int    _year;
   private final String _director;
+  private HashMap<Integer,Video> map = new HashMap<Integer, Video>();
 
   /**
    * Initialize all object attributes.
@@ -18,6 +21,7 @@ final class VideoObj implements Video {
     _title = title;
     _director = director;
     _year = year;
+    map.put(this.hashCode(), this);
   }
 
   public String director() {
@@ -37,11 +41,18 @@ final class VideoObj implements Video {
 
   public boolean equals(Object thatObject) {
     // TODO  
-    if (thatObject != null ) {
-		  if (this.hashCode() == thatObject.hashCode()) return true;
+    // Rewritten to implement Hash Consing
+	  if (thatObject != null) {
+		  int hash = thatObject.hashCode();
+		  Video v = map.get(hash);
+		  
+		  if ((v == null) || !(v.title().equals(_title)) || v.year() != _year || !(v.director().equals(_director))) {
+			  map.put(hash, v);
+			  return false;
+		  }
+		  return true;
 	  }
-	
-    return false;
+	  return false;
   }
 
   public int hashCode() {

@@ -1,0 +1,8 @@
+SE 450 Assignment 7:
+
+- For this assignment I believe taht I completed all of the tasks required.
+- Created Factory pattern for the UI package so that the only files that are public are the factory files and interfaces.
+- I also created a generic pair class and removed it from UIForm and UIMenu classes
+- I implemented hash consing for Videos in Data
+- Note: I did this assignment to the best of my ability and wasn't 100% sure of some of the requirements
+- If I have I missed something then it is possible that it was because of a misunderstanding or that I did not full understand the subject.

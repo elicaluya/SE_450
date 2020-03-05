@@ -3,11 +3,11 @@ package shop.main;
 import shop.ui.UI;
 import shop.ui.UIMenu;
 import shop.ui.UIMenuAction;
-import shop.ui.UIMenuBuilder;
 import shop.ui.UIError;
 import shop.ui.UIForm;
 import shop.ui.UIFormTest;
-import shop.ui.UIFormBuilder;
+import shop.ui.UIFormMenuBuilderFactory;
+
 import shop.data.Data;
 import shop.data.Inventory;
 import shop.data.Video;
@@ -66,10 +66,10 @@ class Control {
         }
       };
 
-    UIFormBuilder f = new UIFormBuilder();
-    f.add("Title", _stringTest);
-    f.add("Year", yearTest);
-    f.add("Director", _stringTest);
+    UIFormMenuBuilderFactory f = new UIFormMenuBuilderFactory();
+    f.addForm("Title", _stringTest);
+    f.addForm("Year", yearTest);
+    f.addForm("Director", _stringTest);
     _getVideoForm = f.toUIForm("Enter Video");
   }
   
@@ -84,22 +84,22 @@ class Control {
   }
   
   private void addSTART(int stateNum) {
-    UIMenuBuilder m = new UIMenuBuilder();
+	  UIFormMenuBuilderFactory m = new UIFormMenuBuilderFactory();
     
-    m.add("Default",
+    m.addMenu("Default",
       new UIMenuAction() {
         public void run() {
           _ui.displayError("doh!");
         }
       });
-    m.add("Add/Remove copies of a video",
+    m.addMenu("Add/Remove copies of a video",
       new UIMenuAction() {
         public void run() {
           String[] result1 = _ui.processForm(_getVideoForm);
           Video v = Data.newVideo(result1[0], Integer.parseInt(result1[1]), result1[2]);
 
-          UIFormBuilder f = new UIFormBuilder();
-          f.add("Number of copies to add/remove", _numberTest);
+          UIFormMenuBuilderFactory f = new UIFormMenuBuilderFactory();
+          f.addForm("Number of copies to add/remove", _numberTest);
           String[] result2 = _ui.processForm(f.toUIForm(""));
                                              
           Command c = Data.newAddCmd(_inventory, v, Integer.parseInt(result2[0]));
@@ -108,7 +108,7 @@ class Control {
           }
         }
       });
-    m.add("Check in a video",
+    m.addMenu("Check in a video",
       new UIMenuAction() {
         public void run() {
           // TODO  
@@ -121,7 +121,7 @@ class Control {
             }
         }
       });
-    m.add("Check out a video",
+    m.addMenu("Check out a video",
       new UIMenuAction() {
         public void run() {
           // TODO 
@@ -134,13 +134,13 @@ class Control {
             }
         }
       });
-    m.add("Print the inventory",
+    m.addMenu("Print the inventory",
       new UIMenuAction() {
         public void run() {
           _ui.displayMessage(_inventory.toString());
         }
       });
-    m.add("Clear the inventory",
+    m.addMenu("Clear the inventory",
       new UIMenuAction() {
         public void run() {
           if (!Data.newClearCmd(_inventory).run()) {
@@ -148,7 +148,7 @@ class Control {
           }
         }
       });
-    m.add("Undo",
+    m.addMenu("Undo",
       new UIMenuAction() {
         public void run() {
           if (!Data.newUndoCmd(_inventory).run()) {
@@ -156,7 +156,7 @@ class Control {
           }
         }
       });
-    m.add("Redo",
+    m.addMenu("Redo",
       new UIMenuAction() {
         public void run() {
           if (!Data.newRedoCmd(_inventory).run()) {
@@ -164,7 +164,7 @@ class Control {
           }
         }
       });
-    m.add("Print top ten all time rentals in order",
+    m.addMenu("Print top ten all time rentals in order",
       new UIMenuAction() {
         public void run() {
           // TODO  
@@ -180,14 +180,14 @@ class Control {
         }
       });
           
-    m.add("Exit",
+    m.addMenu("Exit",
       new UIMenuAction() {
         public void run() {
           _state = EXIT;
         }
       });
     
-    m.add("Initialize with bogus contents",
+    m.addMenu("Initialize with bogus contents",
       new UIMenuAction() {
         public void run() {
           Data.newAddCmd(_inventory, Data.newVideo("a", 2000, "m"), 1).run();
@@ -222,16 +222,16 @@ class Control {
     _menus[stateNum] = m.toUIMenu("Bob's Video");
   }
   private void addEXIT(int stateNum) {
-    UIMenuBuilder m = new UIMenuBuilder();
+	  UIFormMenuBuilderFactory m = new UIFormMenuBuilderFactory();
     
-    m.add("Default", new UIMenuAction() { public void run() {} });
-    m.add("Yes",
+    m.addMenu("Default", new UIMenuAction() { public void run() {} });
+    m.addMenu("Yes",
       new UIMenuAction() {
         public void run() {
           _state = EXITED;
         }
       });
-    m.add("No",
+    m.addMenu("No",
       new UIMenuAction() {
         public void run() {
           _state = START;
