@@ -1,12 +1,11 @@
 package shop.main;
 
 import shop.ui.UI;
-import shop.ui.UIMenu;
 import shop.ui.UIMenuAction;
 import shop.ui.UIError;
-import shop.ui.UIForm;
 import shop.ui.UIFormTest;
 import shop.ui.UIFormMenuBuilderFactory;
+import shop.ui.UIFormMenu;
 
 import shop.data.Data;
 import shop.data.Inventory;
@@ -21,10 +20,10 @@ class Control {
   private static final int EXIT = 1;
   private static final int START = 2;
   private static final int NUMSTATES = 10;
-  private UIMenu[] _menus;
+  private UIFormMenu[] _menus;
   private int _state;
 
-  private UIForm _getVideoForm;
+  private UIFormMenu _getVideoForm;
   private UIFormTest _numberTest;
   private UIFormTest _stringTest;
     
@@ -35,7 +34,7 @@ class Control {
     _inventory = inventory;
     _ui = ui;
 
-    _menus = new UIMenu[NUMSTATES];
+    _menus = new UIFormMenu[NUMSTATES];
     _state = START;
     addSTART(START);
     addEXIT(EXIT);
@@ -70,7 +69,7 @@ class Control {
     f.addForm("Title", _stringTest);
     f.addForm("Year", yearTest);
     f.addForm("Director", _stringTest);
-    _getVideoForm = f.toUIForm("Enter Video");
+    _getVideoForm = f.toUIFormMenu("Enter Video");
   }
   
   void run() {
@@ -100,7 +99,7 @@ class Control {
 
           UIFormMenuBuilderFactory f = new UIFormMenuBuilderFactory();
           f.addForm("Number of copies to add/remove", _numberTest);
-          String[] result2 = _ui.processForm(f.toUIForm(""));
+          String[] result2 = _ui.processForm(f.toUIFormMenu(""));
                                              
           Command c = Data.newAddCmd(_inventory, v, Integer.parseInt(result2[0]));
           if (! c.run()) {
@@ -219,7 +218,7 @@ class Control {
         }
       });
     
-    _menus[stateNum] = m.toUIMenu("Bob's Video");
+    _menus[stateNum] = m.toUIFormMenu("Bob's Video");
   }
   private void addEXIT(int stateNum) {
 	  UIFormMenuBuilderFactory m = new UIFormMenuBuilderFactory();
@@ -238,6 +237,6 @@ class Control {
         }
       });
     
-    _menus[stateNum] = m.toUIMenu("Are you sure you want to exit?");
+    _menus[stateNum] = m.toUIFormMenu("Are you sure you want to exit?");
   }
 }

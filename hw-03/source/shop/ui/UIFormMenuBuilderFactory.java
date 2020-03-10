@@ -4,37 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UIFormMenuBuilderFactory implements UIFormBuilder, UIMenuBuilder {
+public class UIFormMenuBuilderFactory implements UIFormMenuBuilder {
 	private final ArrayList<UIPair> _menu;
 	
 	public UIFormMenuBuilderFactory() {
 	    _menu = new ArrayList();
-	}
-	
-
-	
-	@Override
-	public UIMenu toUIMenu(String heading) {
-	    if (null == heading)
-	    	throw new IllegalArgumentException();
-	    if (_menu.size() <= 1)
-	    	throw new IllegalStateException();
-	    UIPair[] array = new UIPair[_menu.size()];
-	    for (int i = 0; i < _menu.size(); i++)
-	    	array[i] = (_menu.get(i));
-	    return new UIFormMenuFactory(heading,array);
-	}
-
-	@Override
-	public UIForm toUIForm(String heading) {
-	    if (null == heading)
-	    	throw new IllegalArgumentException();
-	    if (_menu.size() < 1)
-	    	throw new IllegalStateException();
-	    UIPair[] array = new UIPair[_menu.size()];
-	    for (int i = 0; i < _menu.size(); i++)
-	    	array[i] = (_menu.get(i));
-	    return new UIFormMenuFactory(heading, array);
 	}
 
 	
@@ -49,6 +23,19 @@ public class UIFormMenuBuilderFactory implements UIFormBuilder, UIMenuBuilder {
 	    	throw new IllegalArgumentException();
 	    _menu.add(new UIPairFactory(prompt, action));
 		
+	}
+
+
+	@Override
+	public UIFormMenu toUIFormMenu(String heading) {
+		if (null == heading)
+	    	throw new IllegalArgumentException();
+	    if (_menu.size() < 1)
+	    	throw new IllegalStateException();
+	    UIPair[] array = new UIPair[_menu.size()];
+	    for (int i = 0; i < _menu.size(); i++)
+	    	array[i] = (_menu.get(i));
+	    return new UIFormMenuFactory(heading, array);
 	}
 
 }

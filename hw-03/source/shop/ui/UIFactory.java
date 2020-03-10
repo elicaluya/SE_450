@@ -38,36 +38,36 @@ public class UIFactory implements UI{
      }
   	
   	@Override
-  	public void processMenu(UIMenu menu) {
+  	public void processMenu(UIFormMenu menu) {
   		if (typeText) {
-  			_out.println(menu.getHeadingMenu());
+  			_out.println(menu.getHeading());
   		    _out.println("Enter choice by number:");
 
-  		    for (int i = 1; i < menu.sizeMenu(); i++) {
-  		      _out.println("  " + i + ". " + menu.getPromptMenu(i));
+  		    for (int i = 1; i < menu.size(); i++) {
+  		      _out.println("  " + i + ". " + menu.getP(i));
   		    }
 
   		    String response = getResponse();
   		    int selection;
   		    try {
   		      selection = Integer.parseInt(response, 10);
-  		      if ((selection < 0) || (selection >= menu.sizeMenu()))
+  		      if ((selection < 0) || (selection >= menu.size()))
   		        selection = 0;
   		    } catch (NumberFormatException e) {
   		      selection = 0;
   		    }
-  		  menu.runActionMenu((UIMenuAction) menu.getActionMenu(selection));
+  		  menu.runAction((UIMenuAction) menu.getT(selection));
   		}
   		
   		else {
   			StringBuffer b = new StringBuffer();
-  		    b.append(menu.getHeadingMenu());
+  		    b.append(menu.getHeading());
   		    b.append("\n");
   		    b.append("Enter choice by number:");
   		    b.append("\n");
 
-  		    for (int i = 1; i < menu.sizeMenu(); i++) {
-  		    	b.append("  " + i + ". " + menu.getPromptMenu(i));
+  		    for (int i = 1; i < menu.size(); i++) {
+  		    	b.append("  " + i + ". " + menu.getP(i));
   		    	b.append("\n");
   		    }
 
@@ -75,29 +75,29 @@ public class UIFactory implements UI{
   		    int selection;
   		    try {
   		    	selection = Integer.parseInt(response, 10);
-  		    	if ((selection < 0) || (selection >= menu.sizeMenu()))
+  		    	if ((selection < 0) || (selection >= menu.size()))
   		    		selection = 0;
   		    } catch (NumberFormatException e) {
   		    	selection = 0;
   		    }
 
   		    
-  		    menu.runActionMenu((UIMenuAction) menu.getActionMenu(selection));
+  		    menu.runAction((UIMenuAction) menu.getT(selection));
   		}
 	
   	}
 
   	@Override
-  	public String[] processForm(UIForm form) {
-  		String[] s = new String [form.sizeForm()];
+  	public String[] processForm(UIFormMenu form) {
+  		String[] s = new String [form.size()];
 		int i = 0;
   		
   		if (typeText) {
-  			while (i < form.sizeForm()) {
-  				_out.print(form.getPromptForm(i));
+  			while (i < form.size()) {
+  				_out.print(form.getP(i));
   				_out.flush();
   				String r = getResponse();
-  				if (form.checkInputForm(i, r, (UIFormTest) form.getTestForm(i))) {
+  				if (form.checkInput(i, r, (UIFormTest) form.getT(i))) {
   					s[i] = r;
   					i++;
   				}
@@ -108,11 +108,11 @@ public class UIFactory implements UI{
   		}
   		
   		else {
-  			while (i < form.sizeForm()) {
-  				String r = JOptionPane.showInputDialog(form.getPromptForm(i));
+  			while (i < form.size()) {
+  				String r = JOptionPane.showInputDialog(form.getP(i));
   				if (r == null)
   					r = "";
-  				if (form.checkInputForm(i, r, (UIFormTest) form.getTestForm(i))) {
+  				if (form.checkInput(i, r, (UIFormTest) form.getT(i))) {
   					s[i] = r;
   					i++;
   				}
