@@ -24,7 +24,7 @@ public class VideoTEST extends TestCase {
 	  Assert.assertFalse( a.equals( new Object() ) );
 	  Assert.assertFalse( a.equals( null ) );
   }
-
+  
   public void testCompareTo() { 
     // TODO  
 	  String title = "A", title2 = "B";
