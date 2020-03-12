@@ -1,0 +1,12 @@
+SE 450 HW 8
+
+For this Assignment I attempted to fulfill all of the tasks to my fullest understanding:
+- Refactoring UIMenu/UIForm to remove redundant and copied code.
+- Refactoring UIMenuBuilder/UIFormBuilder to remove redundant and copied code.
+- State pattern in Control (using Enums for the various Menus, Forms)
+
+For the refactoring I combined UIForm and UIMenu into one class so that there will only be one set of methods.
+I did the same for UIMenuBuilderand UIFormBuilder in which I combined the classes so that there will be only one set of methods.
+I implemented state pattern in Control by using enums for the Start, Exit, and Exited State.
+I also used enums for the UIMenuActions.
+I also created an auxillary function in UIFactory that eliminates some repeated code in some of the other functions.

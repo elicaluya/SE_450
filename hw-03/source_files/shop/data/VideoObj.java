@@ -10,18 +10,29 @@ final class VideoObj implements Video {
   private final String _title;
   private final int    _year;
   private final String _director;
-  private HashMap<Integer,Video> map = new HashMap<Integer, Video>();
 
   /**
    * Initialize all object attributes.
    * Title and director are "trimmed" to remove leading and final space.
    * @throws IllegalArgumentException if object invariant violated.
    */
-  VideoObj(String title, int year, String director) {
-    _title = title;
-    _director = director;
-    _year = year;
-    map.put(this.hashCode(), this);
+  VideoObj(String title, int year, String director) {	  
+	  if (  (title == null)
+		        || (director == null)
+		        || (year <= 1800)
+		        || (year >= 5000)) {
+		      throw new IllegalArgumentException();
+	  }
+	  title = title.trim();
+	  director = director.trim();
+	  if (  ("".equals(title))
+			  || ("".equals(director))) {
+		  throw new IllegalArgumentException();
+	  }
+	  
+	  _title = title;
+	  _director = director;
+	  _year = year;
   }
 
   public String director() {
@@ -38,21 +49,15 @@ final class VideoObj implements Video {
     // TODO  
     return _year;
   }
+  
 
   public boolean equals(Object thatObject) {
     // TODO  
-    // Rewritten to implement Hash Consing
-	  if (thatObject != null) {
-		  int hash = thatObject.hashCode();
-		  Video v = map.get(hash);
-		  
-		  if ((v == null) || !(v.title().equals(_title)) || v.year() != _year || !(v.director().equals(_director))) {
-			  map.put(hash, v);
-			  return false;
-		  }
-		  return true;
+	  if (thatObject != null ) {
+		  if (this.hashCode() == thatObject.hashCode()) return true;
 	  }
-	  return false;
+	
+    return false;
   }
 
   public int hashCode() {

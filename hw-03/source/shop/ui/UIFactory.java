@@ -36,6 +36,20 @@ public class UIFactory implements UI{
         }
         return result;
      }
+    
+    
+    public void runMenuAction(UIFormMenu menu,String response) {
+    	int selection;
+    	try {
+    		selection = Integer.parseInt(response, 10);
+    		if ((selection < 0) || (selection >= menu.size()))
+    			selection = 0;
+		    } catch (NumberFormatException e) {
+		      selection = 0;
+		    }
+    	menu.runAction((UIMenuAction) menu.getT(selection));
+    }
+    
   	
   	@Override
   	public void processMenu(UIFormMenu menu) {
@@ -48,15 +62,8 @@ public class UIFactory implements UI{
   		    }
 
   		    String response = getResponse();
-  		    int selection;
-  		    try {
-  		      selection = Integer.parseInt(response, 10);
-  		      if ((selection < 0) || (selection >= menu.size()))
-  		        selection = 0;
-  		    } catch (NumberFormatException e) {
-  		      selection = 0;
-  		    }
-  		  menu.runAction((UIMenuAction) menu.getT(selection));
+  		  
+  		    runMenuAction(menu,response);
   		}
   		
   		else {
@@ -72,17 +79,7 @@ public class UIFactory implements UI{
   		    }
 
   		    String response = JOptionPane.showInputDialog(b.toString());
-  		    int selection;
-  		    try {
-  		    	selection = Integer.parseInt(response, 10);
-  		    	if ((selection < 0) || (selection >= menu.size()))
-  		    		selection = 0;
-  		    } catch (NumberFormatException e) {
-  		    	selection = 0;
-  		    }
-
-  		    
-  		    menu.runAction((UIMenuAction) menu.getT(selection));
+  		    runMenuAction(menu,response);
   		}
 	
   	}

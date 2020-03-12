@@ -4,27 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UIFormMenuBuilderFactory implements UIFormMenuBuilder {
+public class UIFormMenuBuilderFactory <P,T> implements UIFormMenuBuilder {
 	private final ArrayList<UIPair> _menu;
 	
 	public UIFormMenuBuilderFactory() {
 	    _menu = new ArrayList();
 	}
-
-	
-	@Override
-	public void addForm(String prompt, UIFormTest test) {
-	    _menu.add(new UIPairFactory(prompt, test));
-	}
-
-	@Override
-	public void addMenu(String prompt, UIMenuAction action) {
-	    if (null == action)
-	    	throw new IllegalArgumentException();
-	    _menu.add(new UIPairFactory(prompt, action));
-		
-	}
-
 
 	@Override
 	public UIFormMenu toUIFormMenu(String heading) {
@@ -36,6 +21,13 @@ public class UIFormMenuBuilderFactory implements UIFormMenuBuilder {
 	    for (int i = 0; i < _menu.size(); i++)
 	    	array[i] = (_menu.get(i));
 	    return new UIFormMenuFactory(heading, array);
+	}
+
+	@Override
+	public void add(Object p, Object t) {
+		if (t == null)
+			throw new IllegalArgumentException();
+		_menu.add(new UIPairFactory(p,t));
 	}
 
 }
